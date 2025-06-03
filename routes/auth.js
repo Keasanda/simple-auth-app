@@ -3,21 +3,29 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const db = require('../db');
 const router = express.Router();
+const path = require('path');
 
 router.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/login.html'));
 });
 
 router.get('/register', (req, res) => {
+  console.log('GET /register - Serving register.html');
   res.sendFile(path.join(__dirname, '../views/register.html'));
 });
 
 router.post('/register', async (req, res) => {
   const { username, password } = req.body;
+  console.log('POST /register - Received:', { username, password });
   const hash = await bcrypt.hash(password, 10);
+  console.log('Password hashed:', hash);
 
   db.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hash], (err) => {
-    if (err) return res.send('Error registering');
+    if (err) {
+      console.error('DB Error on register:', err);
+      return res.send('Error registering');
+    }
+    console.log('User registered:', username);
     res.send('Registration successful. <a href="/login">Login here</a>');
   });
 });
