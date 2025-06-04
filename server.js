@@ -8,7 +8,7 @@ const app = express();
 const authRoutes = require('./routes/auth');
 
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 app.use(session({
   secret: 'your_secret_key',
   resave: false,
