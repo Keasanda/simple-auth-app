@@ -15,29 +15,51 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-  const { username, password } = req.body;
-  console.log('POST /register - Received:', { username, password });
+  const { name, email, password } = req.body;
+  console.log('POST /register - Received:', { name, email, password });
   const hash = await bcrypt.hash(password, 10);
   console.log('Password hashed:', hash);
 
-  db.query('INSERT INTO users (username, password) VALUES (?, ?)', [username, hash], (err) => {
-    if (err) {
-      console.error('DB Error on register:', err);
-      return res.send('Error registering');
+  db.query(
+    'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
+    [name, email, hash],
+    (err) => {
+      if (err) {
+        console.error('DB Error on register:', err);
+        return res.send('Error registering');
+      }
+      console.log('User registered:', email);
+      res.send('Registration successful. <a href="/login">Login here</a>');
     }
-    console.log('User registered:', username);
-    res.send('Registration successful. <a href="/login">Login here</a>');
-  });
+  );
 });
 
 router.post('/login', (req, res) => {
-  const { username, password } = req.body;
+  const { name, password } = req.body;
+  console.log('POST /login - Received:', { name, password });
 
-  db.query('SELECT * FROM users WHERE username = ?', [username], async (err, results) => {
-    if (err || results.length === 0) return res.send('User not found');
+  db.query('SELECT * FROM users WHERE name = ?', [name], async (err, results) => {
+    if (err) {
+      console.error('DB Error on login:', err);
+      return res.send('Database error');
+    }
+    console.log('DB Query Results:', results);
+
+    if (results.length === 0) {
+      console.log('User not found for name:', name);
+      return res.send('User not found');
+    }
+
     const match = await bcrypt.compare(password, results[0].password);
-    if (!match) return res.send('Incorrect password');
-    req.session.user = username;
+    console.log('Password match:', match);
+
+    if (!match) {
+      console.log('Incorrect password for user:', name);
+      return res.send('Incorrect password');
+    }
+
+    req.session.user = name;
+    console.log('Login successful for user:', name);
     res.send('Login successful! <a href="/login">Back</a>');
   });
 });
