@@ -1,13 +1,110 @@
+:root {
+    --fresh-green: #8BC34A;
+    --earth-brown: #795548;
+    --sunshine-yellow: #FFD54F;
+}
+
 body {
-  font-family: Arial;
-  padding: 20px;
-  text-align: center;
+    background: linear-gradient(135deg, var(--fresh-green), var(--sunshine-yellow));
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
 }
+
+.auth-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.market-header {
+    text-align: center;
+    padding: 2rem;
+    background: var(--fresh-green);
+    color: white;
+}
+
+.market-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    border: 3px solid white;
+}
+
+.auth-form {
+    padding: 2rem;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    background: #f8f8f8;
+    border-radius: 10px;
+    padding: 0.8rem;
+    transition: transform 0.2s ease;
+}
+
+.form-group:hover {
+    transform: translateX(5px);
+}
+
+.form-group i {
+    color: var(--earth-brown);
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
 input {
-  margin: 5px;
-  padding: 8px;
-  width: 200px;
+    border: none;
+    background: transparent;
+    width: 100%;
+    font-size: 1rem;
+    color: #333;
 }
+
+input:focus {
+    outline: none;
+}
+
 button {
-  padding: 8px 15px;
+    width: 100%;
+    padding: 1rem;
+    background: var(--earth-brown);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #6d4c41;
+}
+
+.form-links {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-links a {
+    color: var(--earth-brown);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 480px) {
+    .auth-container {
+        margin: 1rem;
+    }
+    
+    .market-header {
+        padding: 1.5rem;
+    }
 }
