@@ -108,3 +108,27 @@ button:hover {
         padding: 1.5rem;
     }
 }
+
+/* Add to existing styles */
+.fa-user {
+  color: var(--earth-brown);
+}
+
+.auth-form p {
+  color: var(--earth-brown);
+  margin-top: 1.5rem;
+}
+
+.auth-form a {
+  color: var(--fresh-green);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-form a:hover {
+  text-decoration: underline;
+}
+
+button i.fa-sign-in-alt {
+  margin-right: 8px;
+}
